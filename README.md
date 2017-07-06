@@ -3,7 +3,9 @@ silverstripe-mailchimp
 
 MailChimp subscription form
 
-The form could be injected into a widget, or used inside a page through the MailChimp extension
+Customizable mailchimp subscribtion form. Simply put the form into your template, and eventually
+customize it through a .ss template file.
+It could also be injected into a widget, or used inside a page through the MailChimpExtension extension.
 
 ## Maintainer Contact
 
@@ -11,8 +13,11 @@ Sam Sehnert [sam@customd.com]
 
 ## Features
 
+* Customizable form template
 * Subscription widget form
 * Static function callable from outside
+
+*Warning!* Version 2.0 is not compatible with 1.* configuration. Page extension now is MailChimpExtension (no more MailChip)
 
 ## Requirements
 
@@ -32,6 +37,38 @@ Install it through composer:
 	composer require customd/silverstripe-mailchimp
 ```
 
+### Using the form
+
+From everywhere in your template you can render your form 
+
+```HTML
+<div id="mailchimp-form">
+	$MailChimpSubscribeForm
+</div>
+```
+
+You can eventually also override the default template, just add a MailChimpSubscribeForm.ss in themes/mytheme/template/Includes:
+
+```HTML
+<form $FormAttributes>
+
+	$Fields.dataFieldByName(SecurityID)
+	
+	<h3> NEWSLETTER TRIBE </h3>
+	<ul>
+		<li>
+			<div class="input-append newsLatterBox text-center">
+				<% if $Fields.dataFieldByName(Email).Message %><span class="message $Fields.dataFieldByName(Email).MessageType">$Fields.dataFieldByName(Email).Message</span><% end_if %>
+				$Fields.dataFieldByName(Email).addExtraClass(full).addExtraClass(text-center).setAttribute(placeholder, Email)
+				
+				<button class="btn  bg-gray" type="submit"> Registrati <i class="fa fa-long-arrow-right"> </i> </button>
+			</div>
+		</li>
+	</ul>
+
+</form>
+```
+
 ### Using in a page
 
 Extend the Page class (or whatever class you want to use) whit the MailChimp extension:
@@ -42,10 +79,10 @@ Name: mailchimp-extensions
 ---
 Page:
   extensions:
-    - MailChimp
+    - MailChimpExtension
 ```
 
-Then render the $McSubscribeForm variable inside your template:
+Then render the $MailChimpSubscribeForm variable inside your template:
 
 ```
 <% include SideBar %>
@@ -56,7 +93,7 @@ Then render the $McSubscribeForm variable inside your template:
 	</article>
 		$Form
 		$PageComments
-		$McSubscribeForm
+		$MailChimpSubscribeForm
 </div>
 ```
 
@@ -101,10 +138,10 @@ Name: mailchimp
 ---
 MailChimpController:
   #apikey - see http://admin.mailchimp.com/account/api
-  apikey: 'afe564e2dbbeb74f392de68f927ac326ef4-us6'
+  apikey: API-KEY
   # A List Id to run examples against. use lists() to view all
   # Also, login to MC account, go to List, then List Tools, and look for the List ID entry
-  listid: '8e5f26f915'
+  listid: LIST-ID
   redirect: true
   redirect_ok: 'reg-ok/'
   redirect_ko: 'reg-ko/'
