@@ -7,7 +7,7 @@ The form could be injected into a widget, or used inside a page through the Mail
 
 ## Maintainer Contact
 
-Gabriele Brosulo [gabriele.brosulo (at) zirak (dot) it]
+Sam Sehnert [sam@customd.com]
 
 ## Features
 
@@ -16,8 +16,8 @@ Gabriele Brosulo [gabriele.brosulo (at) zirak (dot) it]
 
 ## Requirements
 
-* Silverstripe framework 3.1.*
-* Silverstripe cms 3.1.*
+* Silverstripe framework ~3.1
+* Silverstripe cms ~3.1
 
 ## Suggestions
 
@@ -29,7 +29,7 @@ Gabriele Brosulo [gabriele.brosulo (at) zirak (dot) it]
 Install it through composer: 
 
 ```
-	composer require zirak/silverstripe-mailchimp
+	composer require customd/silverstripe-mailchimp
 ```
 
 ### Using in a page
